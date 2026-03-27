@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actions & Stuff | Downloads Oficiais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Variáveis de cor para facilitar ajustes */
+        :root {
+            --primary-yellow: #FFD100;
+            --primary-orange: #FF9D00;
+            --primary-blue: #0066FF;
+            --dark-bg: #0F172A;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 209, 0, 0.15);
+            --hover-glow: rgba(255, 209, 0, 0.4);
+        }
+
+        /* Estilo global */
+        body {
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 25% 5%, rgba(0, 102, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 75% 80%, rgba(255, 209, 0, 0.15) 0%, transparent 40%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Elementos decorativos no fundo */
+        .bg-decor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .decor-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, transparent, rgba(0, 102, 255, 0.1));
+            filter: blur(80px);
+            animation: floatShape 25s ease-in-out infinite alternate;
+        }
+
+        .decor-shape:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            top: -250px;
+            left: -250px;
+            animation-delay: 0s;
+        }
+
+        .decor-shape:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            bottom: -300px;
+            right: -300px;
+            background: linear-gradient(45deg, transparent, rgba(255, 209, 0, 0.1));
+            animation-delay: 5s;
+        }
+
+        @keyframes floatShape {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(30px, -30px) rotate(5deg); }
+        }
+
+        /* Cabeçalho premium */
+        header {
+            width: 100%;
+            max-width: 800px;
+            margin: 40px 0 30px;
+            text-align: center;
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .logo-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .logo-actions {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--primary-yellow) 0%, transparent 70%);
+            filter: blur(20px);
+            z-index: 1;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        /* Container principal */
+        .main-container {
+            width: 100%;
+            max-width: 550px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 
+                0 0 1px rgba(255, 255, 255, 0.2),
+                0 15px 35px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            animation-delay: 0.3s;
+        }
+
+        /* Área de preview */
+        .preview-section {
+            width: 100%;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease-in-out infinite alternate;
+        }
+
+        .preview-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            z-index: 1;
+        }
+
+        .preview-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .preview-version {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Área de downloads */
+        .download-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 209, 0, 0.08), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .download-card:hover::before {
+            left: 100%;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 209, 0, 0.3);
+            box-shadow: 0 12px 30px var(--hover-glow);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .icon-guide {
+            background: linear-gradient(135deg, #4361EE, #3A0CA3);
+        }
+
+        .icon-addon {
+            background: linear-gradient(135deg, #F72585, #7209B7);
+        }
+
+        .icon-app {
+            background: linear-gradient(135deg, #4CC9F0, #4361EE);
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.4;
+        }
+
+        .card-badge {
+            background: rgba(255, 209, 0, 0.2);
+            color: var(--primary-yellow);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Rodapé */
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+            animation-delay: 0.6s;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-size: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-yellow);
+        }
+
+        /* Animações gerais */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            header {
+                margin: 25px 0;
+            }
+
+            .logo-actions {
+                max-width: 260px;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .main-container {
+                padding: 25px;
+                max-width: 90%;
+            }
+
+            .preview-section {
+                height: 180px;
+                margin-bottom: 25px;
+            }
+
+            .preview-title {
+                font-size: 1.1rem;
+            }
+
+            .download-card {
+                padding: 18px;
+                gap: 15px;
+            }
+
+            .card-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Elementos decorativos do fundo -->
+    <div class="bg-decor">
+        <div class="decor-shape"></div>
+        <div class="decor-shape"></div>
+    </div>
+
+    <header>
+        <div class="logo-wrapper">
+            <img src="https://i.imgur.com/5KzY7XH.png" alt="Actions & Stuff" class="logo-actions">
+            <div class="logo-glow"></div>
+        </div>
+        <p class="tagline">Addons Oficiais e Guia Completo para Instalação</p>
+    </header>
+
+    <div class="main-container">
+        <!-- Área de preview -->
+        <div class="preview-section">
+            <img src="https://i.imgur.com/5KzY7XH.png" alt="Actions & Stuff Preview" class="preview-img">
+            <div class="preview-overlay">
+                <div class="preview-title">Actions & Stuff</div>
+                <div class="preview-version">Versão 1.9.1 | Atualizado em 26/03/2026</div>
+            </div>
+        </div>
+
+        <!-- Grid de downloads -->
+        <div class="download-grid">
+            <a href="https://www.mediafire.com/file/s32ggchc478811n/como_abaixar_addon/file" target="_blank" class="download-card">
+                <div class="card-icon icon-guide">📄</div>
+                <div class="card-content">
+                    <div class="card-title">Guia "Como Baixar Addon"</div>
+                    <div class="card-desc">Arquivo TXT (309B) com instruções passo a passo para iniciantes</div>
+                </div>
+                <div class="card-badge">TXT</div>
+            </a>
+
+            <a href="https://www.mediafire.com/file/ynr2caj9ozi2xds/Actions__Stuff_1.9.1@ZGAMES.zip/file" target="_blank" class="download-card">
+                <div class="card-icon icon-addon">🎮</div>
+                <div class="card-content">
+                    <div class="card-title">Addon Actions Stuff 1.9.1</div>
+                    <div class="card-desc">Arquivo ZIP (16.71MB) com todos os recursos do addon oficial</div>
+                </div>
+                <div class="card-badge">ZIP</div>
+            </a>
+
+            <a href="https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver" target="_blank" class="download-card">
+                <div class="card-icon icon-app">📱</div>
+                <div class="card-content">
+                    <div class="card-title">Instalar ZArchiver</div>
+                    <div class="card-desc">Aplicativo necessário para descompactar arquivos ZIP/MCADDON</div>
+                </div>
+                <div class="card-badge">APP</div>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div>© 2026 Actions & Stuff - Todos os Direitos Reservados</div>
+        <div class="footer-links">
+            <a href="#">Política de Privacidade</a>
+            <a href="#">Termos de Uso</a>
+            <a href="#">Contato</a>
+        </div>
+    </footer>
+</body>
+</html>
